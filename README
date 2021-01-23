@@ -1,0 +1,72 @@
+
+This README file contains information on the contents of the own-layer layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+Du musst noch einige Repos clonen, um das Image für Intel bauen zu können:
+
+meta-intel -> in poky ordner
+git clone -b dunfell git://git.yoctoproject.org/meta-intel
+
+meta-openembedded -> in poky ordner
+git clone -b dunfell https://github.com/openembedded/meta-openembedded.git
+
+openembedded-core -> in poky ordner
+git clone -b dunfell https://github.com/openembedded/openembedded-core.git
+
+in poky/build/conf/local.conf ist die Maschine definiert. Die Definition
+kommt aus meta-intel : MACHINE ??= "intel-corei7-64"
+
+Um ein yocto build zu starten benutzt du das tool "bitbake" dazu gibt es natürlich jede
+menge Doku.
+
+Um bitbake nutzen zu können musst du erst die Umgebung wechseln. Dazu navigierst du in definiertordner poky.
+und gibst ein "source oe-init-build-env".
+
+Nun kannst du bitbake nutzen. 
+Dazu gibst du ein: "bitbake pimmel". Die Definition des Images ist in 
+poky/own-layer/recipes-core/images/pimmel.bb definiert. Diese Datei habe ich aus meta-intel
+geklaut und daraufhin modifiziert "meta-intel/recipes-core/images/core-image-tiny.bb"
+
+Wenn du eigene Programme in dein Image installieren willst gibst du das in der image-definition "pimmel.bb" an.
+IMAGE_INSTALL = "nano", dort kannst du standartprogramme hinzufügen, die über meta-layer verfügbar sind. Die Schwierigkeit
+ist manchmal, den richtigen meta-layer für ein Proramm zu finden. Wenn du eigene Programme zb.: python scripte in dein
+image installieren willst, musst du in deinem eigenen layer recipes hinzufügen: "poky/own-layer/recipes-example".
+In dem ordner "recipes-example" kannst du nun pakete anlegen, die du optional installieren kannst. "example" enthält eine Datei
+"example_0.1.bb" die bb-Datei definiert, was getan werden soll. wenn du dann in "pimmel.bb" schreibst "IMAGE_INSTALL += "example".
+Dateien im rootfs maniupulieren, programme patchen muss man mit *.bbappend dateien. 
+
+
+Wenn der build-vorgang erfolgreich durchgelaufen ist (könnte gute 2-3h dauern je nach internetverbindung und rechner)
+findest du unter: poky/build/tmp/deploy/images/intel-corei7-64/pimmel-intel-corei7-64.wic
+Das ist eine raw-image datei. diese kannst du mit dd auf einen stick brennen und direkt davon booten.
+die definition, wie das wic erstellt werden soll findet man in *.wks files (findest du auf in meta-intel). default wird eine fat16 partition
+mit efi shit und dem kernel erstellt, eine ext4 mit dem rootfs und eine swap partition. 
+
+
+Patches
+=======
+
+Please submit any patches against the own-layer layer to the xxxx mailing list (xxxx@zzzz.org)
+and cc: the maintainer:
+
+Maintainer: XXX YYYYYY <xxx.yyyyyy@zzzzz.com>
+
+Table of Contents
+=================
+
+  I. Adding the own-layer layer to your build
+ II. Misc
+
+
+I. Adding the own-layer layer to your build
+=================================================
+
+Run 'bitbake-layers add-layer own-layer'
+
+II. Misc
+========
+
+--- replace with specific information about the own-layer layer ---
