@@ -16,6 +16,9 @@ git clone -b dunfell https://github.com/openembedded/meta-openembedded.git
 openembedded-core -> in poky ordner
 git clone -b dunfell https://github.com/openembedded/openembedded-core.git
 
+kopiere den order build_conf nach poky/build/ und ersetze die fils innerhalb von poky/build/.
+Das ist die Architektur Definitionsdatei und andere grundlegende Einstellungen.
+
 in poky/build/conf/local.conf ist die Maschine definiert. Die Definition
 kommt aus meta-intel : MACHINE ??= "intel-corei7-64"
 
